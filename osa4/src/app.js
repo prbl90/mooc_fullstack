@@ -14,6 +14,17 @@ const mongoUrl = 'mongodb://prbl90:hapadabud1d1@ds046677.mlab.com:46677/fullstac
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
 const PORT = 3003;
-app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
+
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
+
+server.on('close', () => {
+    mongoose.connection.close();
+});
+
+module.exports = {
+    app, server
+};
