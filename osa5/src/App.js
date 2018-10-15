@@ -1,12 +1,14 @@
 import React from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
+import BlogList from './components/BlogList'
+import LoginForm from './components/LoginForm'
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      blogs: []
+        blogs: [],
+        user: null
     }
   }
 
@@ -14,16 +16,17 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
-  } 
+  }
+
+  updateUser(user) {
+      this.setState({user: user});
+  }
 
   render() {
     return (
-      <div>
-        <h2>blogs</h2>
-        {this.state.blogs.map(blog => 
-          <Blog key={blog._id} blog={blog}/>
-        )}
-      </div>
+        <div>
+        { this.state.user === null ? <LoginForm loginHandle={this.updateUser.bind(this)}/> : <BlogList blogs={this.state.blogs}/> }
+        </div>
     );
   }
 }
