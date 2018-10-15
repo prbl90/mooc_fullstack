@@ -1,18 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Blog from './components/Blog'
+import blogService from './services/blogs'
 
-class App extends Component {
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      blogs: []
+    }
+  }
+
+  componentDidMount() {
+    blogService.getAll().then(blogs =>
+      this.setState({ blogs })
+    )
+  } 
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h2>blogs</h2>
+        {this.state.blogs.map(blog => 
+          <Blog key={blog._id} blog={blog}/>
+        )}
       </div>
     );
   }
