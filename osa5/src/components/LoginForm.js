@@ -26,15 +26,18 @@ class LoginForm extends React.Component {
                 password: this.state.password
             });
 
+
             this.setState({ username: '', password: ''});
             this.state.loginHandle(user);
         } catch(exception) {
-            this.setState({
+            /*this.setState({
                 error: 'käyttäjätunnus tai salasana virheellinen',
-            });
-            setTimeout(() => {
-                this.setState({ error: null })
-            }, 5000)
+            });*/
+            this.props.setErrorHandle('login error', true);
+            /*setTimeout(() => {
+                this.setState({ error: null });
+                this.props.setErrorHandle(null);
+            }, 5000)*/
         }
     };
 
